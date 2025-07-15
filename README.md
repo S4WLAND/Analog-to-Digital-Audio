@@ -1,59 +1,72 @@
 # Demonstration: Analog to Digital Audio
 
-**Autor:** StifhBL  
-**Fecha:** 2025-07-15
+> Interactive sandbox that walks through the classic A/D pipeline—sampling, quantization, and VoIP‑style packetisation—rendered in vanilla JS + Canvas.
 
 ---
 
-## Descripción
-Proyecto de demostración interactiva que ilustra el proceso de conversión de una señal de audio analógica a digital, incluyendo:
-1. Señal analógica original  
-2. Muestreo (sampling)  
-3. Cuantización  
-4. Generación de datos digitales  
-5. Empaquetado para VoIP
-
----
-
-## Estructura del proyecto
+## 🏗  Project layout
 
 ```
-/
-├── index.html       # Marcado HTML principal
-├── styles.css       # Estilos y diseño
-└── script.js        # Lógica de dibujo y simulación
+.
+├── index.html   # markup
+├── styles.css   # styles
+└── script.js    # logic
 ```
 
----
-
-## Cómo ejecutar
-
-1. **Clona o descarga** este repositorio.  
-2. Abre `index.html` en tu navegador favorito.  
-3. ¡Listo! Podrás interactuar con los botones para generar nuevas ondas, cambiar parámetros y simular el empaquetado de audio digital.
+Everything is static—no build step.
 
 ---
 
-## Tecnologías
-- **HTML5**: Estructura semántica  
-- **CSS3**: Estilos responsivos y BEM ligero  
-- **JavaScript (ES6+)**: Canvas API para gráficos y lógica de simulación
+## 🚀 Quick start
+
+```bash
+git clone https://github.com/<your‑fork>/analog-digital-audio.git
+cd analog-digital-audio
+open index.html        # or serve with any static server
+```
+
+Or just open the live demo.
 
 ---
 
-## Personalización
-- **Frecuencia base**: modifica `frequency` en `script.js`  
-- **Frecuencia de muestreo**: cambia los valores dentro de la función `changeSampleRate()`  
-- **Resolución (bit depth)**: ajusta el arreglo `depths` en `changeBitDepth()`
+## ⚙️ Tweak guide
+
+| Setting              | Location / variable               | Default | Notes                                   |
+| -------------------- | --------------------------------- | ------- | --------------------------------------- |
+| Base frequency       | `script.js` → `frequency`         | 440 Hz  | Any audible frequency works             |
+| Sample‑rate presets  | `changeSampleRate()` array        | 8–44 k  | Add / remove as needed                  |
+| Bit‑depth presets    | `changeBitDepth()` array          | 8/16/24 | Higher depth ⇒ finer quantisation       |
+| Styles / theme       | `styles.css`                      | —       | Pure CSS—tweak colours, spacing, fonts  |
 
 ---
 
-## Despliegue
-Este proyecto es estático, por lo que puedes:
-- Hospedarlo en GitHub Pages  
-- Subirlo a Netlify o Vercel  
-- Servirlo desde cualquier CDN o servidor estático  
+## 🧩 How it works (short version)
+
+1. **Analog waveform** – sine rendered via Canvas.  
+2. **Sampling** – fixed points per frame; stored in `currentSamples`.  
+3. **Quantization** – rounds to nearest level based on `bitDepth`.  
+4. **Digital dump** – first 20 quantised samples in dec/hex.  
+5. **Packetisation** – naive 20 ms chunks mimicking RTP audio packets.
+
+No external libs, no transpilers—suitable for slides, labs, or quick demos.
 
 ---
 
-> ¡Explora, experimenta y aprende! 🎶
+## 👐 Contributing
+
+PRs welcome for:
+
+* Performance tweaks in sampling / quantisation loops  
+* Alternative visualisations (PCM bars, FFT overlay)  
+* Language translations for the UI
+
+---
+
+## 📄 License
+
+MIT
+
+---
+
+**Author**   : StifhBL  
+**Live demo**: <https://audio-analog-digital.netlify.app/>
