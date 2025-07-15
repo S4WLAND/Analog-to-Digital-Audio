@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Audio Analógico a Digital</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>🎵 Conversión de Audio Analógico a Digital</h1>
+
+    <div class="step">
+      <h2>Paso 1: Señal Analógica Original</h2>
+      <p>Esta es una onda senoidal continua que representa el sonido original</p>
+      <canvas id="analogCanvas" width="800" height="200"></canvas>
+      <div class="info-box">
+        <strong>Características:</strong> Continua, infinitos valores posibles, frecuencia variable
+      </div>
+    </div>
+
+    <div class="step">
+      <h2>Paso 2: Muestreo (Sampling)</h2>
+      <p>Tomamos "fotografías" de la señal a intervalos regulares</p>
+      <canvas id="samplingCanvas" width="800" height="200"></canvas>
+      <div class="info-box">
+        <strong>Frecuencia de muestreo:</strong> <span id="sampleRate">8000 Hz</span><br>
+        <strong>Puntos por segundo:</strong> <span id="pointsPerSecond">8000</span>
+      </div>
+    </div>
+
+    <div class="step">
+      <h2>Paso 3: Quantización</h2>
+      <p>Convertimos cada muestra a un número digital finito</p>
+      <canvas id="quantizationCanvas" width="800" height="200"></canvas>
+      <div class="info-box">
+        <strong>Resolución:</strong> <span id="bitDepth">16 bits</span> (65,536 valores posibles)<br>
+        <strong>Rango:</strong> -32,768 a +32,767
+      </div>
+    </div>
+
+    <div class="step">
+      <h2>Paso 4: Datos Digitales</h2>
+      <p>Resultado final: secuencia de números que representan el audio</p>
+      <div class="data-display" id="digitalData">
+        Generando datos digitales...
+      </div>
+    </div>
+
+    <div class="controls">
+      <button onclick="generateNewWave()">🔄 Generar Nueva Onda</button>
+      <button onclick="changeSampleRate()">📊 Cambiar Frecuencia de Muestreo</button>
+      <button onclick="changeBitDepth()">🔢 Cambiar Resolución</button>
+      <button onclick="simulatePacketization()">📦 Simular Empaquetado</button>
+    </div>
+
+    <div class="step">
+      <h2>Paso 5: Empaquetado para VoIP</h2>
+      <p>Los datos se agrupan en paquetes para transmisión por internet</p>
+      <div class="info-box">
+        <strong>Tamaño típico del paquete:</strong> 20ms de audio (160 muestras a 8kHz)<br>
+        <strong>Header del paquete:</strong> Información de secuencia, timestamp, destino
+      </div>
+      <div class="data-display" id="packetData">
+        Paquete #1: [Header] + [160 muestras de audio]<br>
+        Paquete #2: [Header] + [160 muestras de audio]<br>
+        ...
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
