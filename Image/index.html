@@ -3,16 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Audio Analógico a Digital</title>
+    <title>Imagen Analógica a Digital - Videollamada</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>Audio Analógico a Digital</h1>
-        <input type="file" id="audio-input" accept="audio/*">
-        <button id="convert-btn">Convertir a Digital</button>
-        <audio id="audio-player" controls></audio>
+        <h1>📹 Conversión de Imagen Analógica a Digital - Videollamada</h1>
+        
+        <div class="step">
+            <h2>Paso 1: Captura de Luz (Imagen Analógica)</h2>
+            <p>El sensor de la cámara captura luz continua y la convierte en señales eléctricas</p>
+            <canvas id="analogImageCanvas" width="400" height="300"></canvas>
+            <div class="info-box">
+                <strong>Características:</strong> Luz continua, infinitos valores de intensidad y color<br>
+                <strong>Sensor:</strong> CCD o CMOS que convierte fotones en voltaje
+            </div>
+        </div>
+
+        <div class="step">
+            <h2>Paso 2: Digitalización por Píxeles</h2>
+            <p>La imagen se divide en una grilla de píxeles discretos</p>
+            <canvas id="pixelCanvas" width="400" height="300"></canvas>
+            <div class="info-box">
+                <strong>Resolución actual:</strong> <span id="currentResolution">320x240</span> píxeles<br>
+                <strong>Total píxeles:</strong> <span id="totalPixels">76,800</span><br>
+                <strong>Cada píxel:</strong> Un valor numérico RGB
+            </div>
+        </div>
+
+        <div class="step">
+            <h2>Paso 3: Quantización de Color</h2>
+            <p>Cada píxel se convierte en valores RGB digitales</p>
+            <div class="canvas-container">
+                <canvas id="colorQuantCanvas" width="400" height="300"></canvas>
+                <div class="color-strips">
+                    <div>
+                        <strong>Canal R (Rojo)</strong>
+                        <div class="color-strip" id="redStrip"></div>
+                    </div>
+                    <div>
+                        <strong>Canal G (Verde)</strong>
+                        <div class="color-strip" id="greenStrip"></div>
+                    </div>
+                    <div>
+                        <strong>Canal B (Azul)</strong>
+                        <div class="color-strip" id="blueStrip"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="info-box">
+                <strong>Profundidad de color:</strong> <span id="colorDepth">24 bits</span> (8 bits por canal)<br>
+                <strong>Valores posibles:</strong> 0-255 por canal (16.7 millones de colores)
+            </div>
+        </div>
+
+        <div class="step">
+            <h2>Paso 4: Datos Digitales Raw</h2>
+            <p>Matriz de valores RGB sin comprimir</p>
+            <div class="data-display" id="rawData">
+                Generando datos raw...
+            </div>
+            <div class="info-box">
+                <strong>Tamaño sin comprimir:</strong> <span id="rawSize">230.4 KB</span> por frame<br>
+                <strong>A 30 FPS:</strong> <span id="rawBandwidth">6.9 MB/s</span>
+            </div>
+        </div>
+
+        <div class="step">
+            <h2>Paso 5: Compresión de Video</h2>
+            <p>Los datos se comprimen usando codecs especializados</p>
+            <div class="resolution-grid">
+                <div class="resolution-item">
+                    <strong>H.264 (AVC)</strong><br>
+                    <span id="h264Size">~15-50 KB/frame</span><br>
+                    Ratio: 10:1 - 30:1
+                </div>
+                <div class="resolution-item">
+                    <strong>H.265 (HEVC)</strong><br>
+                    <span id="h265Size">~8-25 KB/frame</span><br>
+                    Ratio: 20:1 - 60:1
+                </div>
+                <div class="resolution-item">
+                    <strong>VP9/AV1</strong><br>
+                    <span id="vpSize">~6-20 KB/frame</span><br>
+                    Ratio: 30:1 - 80:1
+                </div>
+            </div>
+        </div>
+
+        <div class="step">
+            <h2>Paso 6: Empaquetado para Videollamada</h2>
+            <p>Los frames se empaquetan para transmisión en tiempo real</p>
+            <div class="fps-meter" id="fpsMeter">
+                FPS: 30 | Latencia: 45ms | Bitrate: 500 kbps
+            </div>
+            <div class="data-display" id="packetData">
+                Generando paquetes de video...
+            </div>
+        </div>
+
+        <div class="controls">
+            <button onclick="changeResolution()">📐 Cambiar Resolución</button>
+            <button onclick="changeColorDepth()">🎨 Cambiar Profundidad Color</button>
+            <button onclick="changeFPS()">⏱️ Cambiar FPS</button>
+            <button onclick="simulateCompression()">🗜️ Simular Compresión</button>
+            <button onclick="generateNewFrame()">🔄 Nuevo Frame</button>
+        </div>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
